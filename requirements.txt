@@ -1,0 +1,6 @@
+# 构建依赖（Python 3.9+）
+# 安装：pip install -r requirements.txt
+# 构建：mkdocs build --strict && python3 scripts/gen_llms.py
+mkdocs-material>=9.5,<10
+# sitemap 与 llms.txt 不依赖第三方插件，由 scripts/gen_llms.py 生成
+（内容由AI生成，仅供参考）

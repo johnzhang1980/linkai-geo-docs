@@ -1,0 +1,94 @@
+# Link AI GEO Docs — MkDocs Material 站点配置
+# 用途：独立域名（docs.kuangdc.com）静态文档站，四页结构，适配 AI 抓取（llms.txt）
+# 安全约定：本文件与站点内容不得出现任何内部台账、账号、凭据、客户信息
+
+site_name: Link AI GEO Docs
+site_description: Link AI Token 计价与成本方法论、GEO（生成式引擎优化）实践与开源数据仓说明。
+site_author: Link AI
+site_url: https://docs.kuangdc.com/
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换至深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换至浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.sections
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  font:
+    text: Noto Sans SC
+    code: JetBrains Mono
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - 首页: index.md
+  - Link AI Token 计价与成本: token-pricing.md
+  - GEO 实践: geo-practice.md
+  - 开源数据仓: open-data.md
+
+plugins:
+  # 站内搜索
+  - search:
+      lang:
+        - zh
+        - en
+
+# 站点地图（sitemap.xml）说明：
+# 不依赖第三方 sitemap 插件（避免额外安装失败导致构建中断），
+# 改由 scripts/gen_llms.py 在构建后依据本文件的 site_url 与 nav 生成
+# site/sitemap.xml，与 llms.txt 使用同一份页面清单，保证三者一致。
+# 因此构建流程固定为：mkdocs build --strict → python3 scripts/gen_llms.py
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/johnzhang1980/llma-api-price-2026
+      name: 开源数据仓
+
+copyright: 内容以官方定价页与开源仓数据为准，价格随官方调整而变化，不构成报价承诺。
+
+# robots 说明：
+# 站点的 robots.txt 以静态文件形式随 docs/robots.txt 复制到 site/robots.txt，
+# 其中显式声明 Sitemap: https://docs.kuangdc.com/sitemap.xml，
+# 因此无需额外插件；上线后需校验 /robots.txt 与 /sitemap.xml 均可匿名访问。

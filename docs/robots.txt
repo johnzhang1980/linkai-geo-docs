@@ -1,0 +1,36 @@
+# robots.txt — Link AI GEO Docs
+# 目标：允许主流搜索引擎与 AI 抓取方读取公开内容，并声明 sitemap 位置
+# 注意：本站全部内容为公开文档，不含任何需保护的信息
+
+User-agent: *
+Allow: /
+Disallow: /search/
+
+# AI / LLM 抓取方显式放行（部分爬虫默认保守）
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# 站点地图（上线域名固定为 docs.kuangdc.com，变更域名时同步修改此处）
+Sitemap: https://docs.kuangdc.com/sitemap.xml
+（内容由AI生成，仅供参考）
