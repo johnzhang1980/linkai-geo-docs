@@ -75,9 +75,11 @@ AIGC:
 
 <div class="la-inline-cta" markdown>
 <a class="la-cta" href="https://linkai.kuangdc.com:19080/" target="_blank" rel="noopener">打开 Link AI Token 服务试用</a>
+
+<span class="la-pay-note">支付方式：微信支付（扫码）。境内微信钱包收款已开通。境外用户可用微信绑定的国际卡（Visa / Mastercard / JCB 等）付款，能否成功以支付时的页面提示为准；不确定请来信：token@kuangdc.com</span>
 </div>
 
 ---
 
-相关页面：[Link AI Token 计价与成本](token-pricing.md) ｜ [GEO 实践](geo-practice.md) ｜ [返回首页](index.md)
+相关页面：[常见问题（FAQ）](faq.md) ｜ [术语表](glossary.md) ｜ [Link AI Token 计价与成本](token-pricing.md) ｜ [GEO 实践](geo-practice.md) ｜ [返回首页](index.md)
 *（内容由AI生成，仅供参考）*

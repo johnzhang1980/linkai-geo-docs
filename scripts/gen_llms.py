@@ -34,10 +34,17 @@ DESCRIPTION_OVERRIDES = {
                 "GEO 实践方法、开源价格数据三部分，首屏提供 Link AI Token 服务试用入口。",
     "token-pricing.md": "按开源仓 price_table 呈现 Claude 与 DeepSeek 的输入/输出单价，"
                         "给出输入、输出、缓存四段成本公式与四个降本杠杆，每项价格标注来源与数据日期。",
+    "faq.md": "22 个高频问题的直答集：Token 四段计价公式、缓存与峰谷的实际折扣条件、预算报法与模型分层、"
+              "GEO 与 SEO 的目标差异、引用率的周度度量方法、llms.txt 与爬虫放行的判断标准，并附 FAQPage 结构化数据。",
+    "glossary.md": "三域术语统一口径：计价与成本（token、上下文膨胀、提示缓存、推理 token、峰谷定价等）、"
+                   "GEO 与内容（可抽取性、信息增益、AI 引用、结构化数据、RAG 等）、效果度量（引用率、基线提问集、声量份额、数据时点等），每条附常见误解。",
     "geo-practice.md": "GEO（生成式引擎优化）的目标是被引用而非排名：发现、抽取、判用、引用四段链路，"
                        "可抽取的内容结构、站点侧必备技术项与三层效果度量方法。",
     "open-data.md": "价格数据全部开源：字段含义、null 值纪律、引用格式，以及把价格数据接入"
                     "内部成本模型的五步维护流程。",
+    "en/index.md": "English one-page summary: what the site covers, a resource map with language labels, "
+                   "pricing method in one paragraph, current payment scope (WeChat Pay; mainland wallet live, international cards via WeChat subject to checkout result), "
+                   "contact channel, and the reason the main documentation stays in Chinese.",
 }
 
 YML_NAV_RE = re.compile(r"^\s*-\s*(?P<title>.+?):\s*(?P<path>[^\s#]+\.md)\s*$")
@@ -161,16 +168,22 @@ def collect_pages(docs_dir: Path, nav: list[tuple[str, str]]) -> list[tuple[str,
 
 
 def write_md_copies(site_dir: Path, rel: str, content: str) -> list[str]:
-    """为页面生成 Markdown 副本，返回生成后的可访问相对路径列表。"""
+    """为页面生成 Markdown 副本，返回生成后的可访问相对路径列表。
+
+    命名纪律：扁平副本只在页面自身目录内生成，绝不跨目录抢名。
+    否则 en/index.md 这类嵌套页的 stem 同为 "index"，会覆盖根 index.md
+    （历史 bug：llms.txt 首条指向的 /index.md 变成英文摘要）。
+    """
     written: list[str] = []
     rel_path = Path(rel)
     stem = rel_path.stem
 
-    # 1) 平铺副本：/token-pricing.md
-    flat = site_dir / (stem + ".md")
-    flat.parent.mkdir(parents=True, exist_ok=True)
-    flat.write_text(content, encoding="utf-8")
-    written.append(flat.relative_to(site_dir).as_posix())
+    # 1) 平铺副本：仅顶层页面生成 /token-pricing.md；嵌套页面跳过
+    if rel_path.parent == Path("."):
+        flat = site_dir / (stem + ".md")
+        flat.parent.mkdir(parents=True, exist_ok=True)
+        flat.write_text(content, encoding="utf-8")
+        written.append(flat.relative_to(site_dir).as_posix())
 
     # 2) 目录式副本：/token-pricing/index.md（与页面 URL 路径对齐）
     if stem != "index":
@@ -273,7 +286,32 @@ def build(site_url: str, site_name: str, site_desc: str,
     (site_dir / "llms-full.txt").write_text("\n".join(header) + "".join(full_parts),
                                            encoding="utf-8")
     build_sitemap(pages, base, site_dir)
+    assert_root_index(site_dir, pages)
     return len(index_items), len(index_items)
+
+
+def assert_root_index(site_dir: Path, pages: list[tuple[str, str, Path]]) -> None:
+    """生成后自检：根 index.md 必须与 docs/index.md 逐字一致。
+
+    口径用内容比对而非标题比对：nav 标签（如「首页」）与页面 H1 本就不同，
+    不能用 nav 标题当期望值。
+    """
+    root_src = next(
+        (src for _, r, src in pages if r.replace("\\", "/") == "index.md"), None
+    )
+    root_md = site_dir / "index.md"
+    if root_src is None or not root_md.exists():
+        return
+    expect = root_src.read_text(encoding="utf-8").strip()
+    actual = root_md.read_text(encoding="utf-8").strip()
+    if actual != expect:
+        raise SystemExit(
+            "[fail] site/index.md 与 docs/index.md 不一致："
+            f"副本首行《{actual.splitlines()[0][:40] if actual else '空'}》，"
+            f"源首段《{expect[:40]}》"
+            "（疑似嵌套页面扁平副本覆盖，检查 write_md_copies）"
+        )
+    print("[ok] 自检通过：site/index.md 与 docs/index.md 一致")
 
 
 def main() -> int:

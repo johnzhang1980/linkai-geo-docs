@@ -90,3 +90,13 @@
     padding: 14px 12px;
   }
 }
+
+
+/* P0：支付方式说明（CTA 旁显式告知，避免海外访客误解） */
+.la-pay-note {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  opacity: 0.72;
+}

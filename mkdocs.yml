@@ -2,7 +2,7 @@
 # 用途：独立域名（docs.kuangdc.com）静态文档站，四页结构，适配 AI 抓取（llms.txt）
 # 安全约定：本文件与站点内容不得出现任何内部台账、账号、凭据、客户信息
 
-site_name: Link AI GEO Docs
+site_name: Link AI · kuangdc
 site_description: Link AI Token 计价与成本方法论、GEO（生成式引擎优化）实践与开源数据仓说明。
 site_author: Link AI
 site_url: https://docs.kuangdc.com/
@@ -47,9 +47,12 @@ extra_css:
 
 nav:
   - 首页: index.md
+  - 常见问题（FAQ）: faq.md
+  - 术语表: glossary.md
   - Link AI Token 计价与成本: token-pricing.md
   - GEO 实践: geo-practice.md
   - 开源数据仓: open-data.md
+  - English: en/index.md
 
 plugins:
   # 站内搜索
@@ -86,7 +89,7 @@ extra:
       link: https://github.com/johnzhang1980/llma-api-price-2026
       name: 开源数据仓
 
-copyright: 内容以官方定价页与开源仓数据为准，价格随官方调整而变化，不构成报价承诺。
+copyright: 内容以官方定价页与开源仓数据为准，价格随官方调整而变化，不构成报价承诺。当前支付方式：微信支付（扫码），境内微信钱包收款已开通；境外用户可用微信绑定的国际卡付款，能否成功以支付页面提示为准（token@kuangdc.com）。
 
 # robots 说明：
 # 站点的 robots.txt 以静态文件形式随 docs/robots.txt 复制到 site/robots.txt，

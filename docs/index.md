@@ -21,6 +21,8 @@ AIGC:
 
 <span class="la-cta-sub">按需开通、按量计费，先用小流量把账算清楚，再决定铺多大</span>
 
+<span class="la-pay-note">支付方式：微信支付（扫码）。境内微信钱包收款已开通。境外用户可用微信绑定的国际卡（Visa / Mastercard / JCB 等）付款，能否成功以支付时的页面提示为准；不确定请来信：token@kuangdc.com</span>
+
 </div>
 
 ## 你会在这里得到什么
@@ -68,6 +70,7 @@ AIGC:
 - 只想算一笔账 → [计价与成本](token-pricing.md)
 - 想让内容被 AI 引用 → [GEO 实践](geo-practice.md)
 - 想把数据接进自己的系统 → [开源数据仓](open-data.md)
+- 先看高频问题与口径 → [常见问题（FAQ）](faq.md) ｜ [术语表](glossary.md)
 - 想直接上手试 → <a href="https://linkai.kuangdc.com:19080/" target="_blank" rel="noopener">打开 Link AI Token 服务</a>
 
 ---
